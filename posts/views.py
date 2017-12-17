@@ -1,5 +1,6 @@
 from django.shortcuts import render
-from django.views.generic import ListView,DetailView,CreateView
+from django.urls import reverse_lazy
+from django.views.generic import ListView,DetailView,CreateView,UpdateView,DeleteView
 from django.http import HttpResponse
 # Create your views here.
 from .models import Post
@@ -23,6 +24,12 @@ class PostDetailView(DetailView):
 class PostCreateView(CreateView):
 	form_class=PostCreateForm
 	template_name='posts/create.html'
+class PostUpdateView(UpdateView):
+	model=Post
+	fields=['title','content']
+	template_name='posts/update.html'
 
-
+class PostDeleteView(DeleteView):
+	model=Post
+	success_url=reverse_lazy('posts:list')
 
