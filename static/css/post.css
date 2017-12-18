@@ -1,0 +1,10 @@
+.title :hover{
+	color:#9ea0a6;
+	display: block;
+}
+a {
+	color:black;
+}
+a :link{
+	text-decoration: none;
+}

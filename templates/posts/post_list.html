@@ -1,3 +1,45 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
 {% for object in object_list %}
-<li><a href="{{ object.get_absolute_url }}">{{ object.title }}</a></li>
+
+<div class='row'>
+
+<div class='col-md-8 col-md-offset-2 mx-auto my-3' style='border-top:1px solid #fff;'>
+	<hr/>
+	<div class='row'>
+	<div class='col-md-6'>
+		{% if object.image %}
+		<img class='img-fluid' src="{{ object.image.url }}">
+		{% endif %}
+	</div>
+	<div class='col-md-6'>
+	<p class='lead' style='color:#9ea0a6;'>{{ object.updated }}</p>
+	<h3 class='t' ><a href="{{ object.get_absolute_url }}" style='text-decoration:none;'>{{ object.title }}</a></h3>
+	<h4 style='color:#9ea0a6;'>{{ object.content|linebreaks|truncatechars:120 }}</h4>
+	</div>
+
+</div>
+</div>
+</div>
+
 {% endfor %}
+<div class='row'>
+	<div class='col-md-6 col-md-offset-3 mx-auto'>
+{% if is_paginated %}
+<div class="pagination">
+    <span class="step-links">
+        {% if page_obj.has_previous %}
+            <a href="?page={{ page_obj.previous_page_number }}"><button class='btn btn-primary'>previous</button></a>
+        {% endif %}
+
+        {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}"><button class='btn btn-primary'>next</button></a>
+        {% endif %}
+    </span>
+</div>
+{% endif %}
+</div>
+</div>
+{% endblock content %}

@@ -6,11 +6,15 @@ from django.http import HttpResponse
 from .models import Post
 from .forms import PostCreateForm
 class PostListView(ListView):
+	paginate_by=4
 	queryset=Post.objects.all()
 	def get_context_data(self,*args,**kwargs):
 		context=super(PostListView,self).get_context_data(*args,**kwargs)
 		print(context)
 		return context
+	def get(self,request,*args,**kwargs):
+		print(request.GET.get('paginator'))
+		return super(PostListView,self).get(request,*args,**kwargs)
 
 class PostDetailView(DetailView):
 	template_name='posts/post_detail.html'
