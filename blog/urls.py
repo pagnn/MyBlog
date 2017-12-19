@@ -17,11 +17,13 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path,include
-from .views import homeView
+from .views import homeView,contactView,aboutView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('',homeView,name='home'),
+    path('contact/',contactView,name='contact'),
+    path('about/',aboutView,name='about'),
     path('posts/', include('posts.urls',namespace='posts')),
 
 ]

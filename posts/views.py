@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views.generic import ListView,DetailView,CreateView,UpdateView,DeleteView
 from django.http import HttpResponse
+from django.contrib.auth.mixins import LoginRequiredMixin
 # Create your views here.
 from .models import Post
 from .forms import PostCreateForm
@@ -25,15 +26,15 @@ class PostDetailView(DetailView):
 		if qs.exists():
 			return qs.first()
 		return HttpResponse('Post not found.')
-class PostCreateView(CreateView):
+class PostCreateView(LoginRequiredMixin,CreateView):
 	form_class=PostCreateForm
 	template_name='posts/create.html'
-class PostUpdateView(UpdateView):
+class PostUpdateView(LoginRequiredMixin,UpdateView):
 	model=Post
 	fields=['title','content']
 	template_name='posts/update.html'
 
-class PostDeleteView(DeleteView):
+class PostDeleteView(LoginRequiredMixin,DeleteView):
 	model=Post
 	success_url=reverse_lazy('posts:list')
 

@@ -2,11 +2,13 @@ from django.db import models
 from django.db.models.signals import pre_save,post_save
 from django.urls import reverse
 from blog.utils import unique_slug_generator
+from django.conf import settings
 # Create your models here.
 def upload_location(instance,filename):
 	return "%s/%s" % (instance.id,filename)
 
 class Post(models.Model):
+	user  = models.ForeignKey(settings.AUTH_USER_MODEL,null=True,blank=True,on_delete=models.SET_NULL)
 	title = models.CharField(max_length=120)
 	slug  =models.SlugField(unique=True,blank=True)
 	image = models.ImageField(upload_to=upload_location,blank=True,null=True,width_field="width_field",height_field="height_field")
