@@ -1,9 +1,9 @@
 {% extends 'base.html' %}
 
-
+{% load crispy_forms_tags %}
 {% block content %}
 <div class='row'>
-	<div class='col-12 text-center'>
+	<div class='col-12 col-md-8 col-md-offset-2 mx-auto text-center'>
 	<h2>{{ object.title }}</h2>
 		
 	</div>
@@ -11,11 +11,34 @@
 
 </div>
 <div class='row'>
-	<div class='col-12 col-md-8 col-md-offset-2'>
+	<div class='col-12 col-md-8 col-md-offset-2 mx-auto'>
 		<div class='content-markdown'>
 {{ object.content }}	
 </div>
 </div>
 </div>
+<div class='row' style='background-color: rgba(0,0,0,.04);'>
+	<div class='col-12 col-md-8 col-md-offset-2 mx-auto'>
+		<h2>Comments</h2>
+		<div>
+			<form method='POST' action='.'>{% csrf_token %}
+				{{ commentForm|crispy }}
+				<button class='btn btn-default'>Comment</button>
+			</form>
+			
+		</div>
+		{% if object.comments %}
+
+		{% for comment in object.comments %}
+		<blockquote class="blockquote text-left">
+  <p class="mb-0">{{ comment.content }}</p>
+  <footer class="blockquote-footer">Via {{ comment.user }} <cite title="Source Title">On {{ comment.timestamp }}</cite></footer>
+</blockquote>
+		{% endfor %}
+
+		{% endif %}
+		</div>
+	
+	</div>
 {% endblock content %}
 
