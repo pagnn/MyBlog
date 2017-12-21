@@ -40,5 +40,12 @@
 			$('#preview-block').css('display','none')
 			$('#form-block').css('display','block')
 		})
-
+		$('.reply-btn').each(function(){
+			$(this).click(function(event){
+				console.log($(this))
+				event.preventDefault()
+				console.log($(this).parent().find('.comment-reply'))
+				$(this).parent().find('.comment-reply').fadeToggle();
+			})
+		})
 	})

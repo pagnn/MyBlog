@@ -19,7 +19,6 @@
 </div>
 <div class='row' style='background-color: rgba(0,0,0,.04);'>
 	<div class='col-12 col-md-8 col-md-offset-2 mx-auto'>
-		<h2>Comments</h2>
 		<div>
 			<form method='POST' action='.'>{% csrf_token %}
 				{{ commentForm|crispy }}
@@ -31,8 +30,21 @@
 
 		{% for comment in object.comments %}
 		<blockquote class="blockquote text-left">
-  <p class="mb-0">{{ comment.content }}</p>
-  <footer class="blockquote-footer">Via {{ comment.user }} <cite title="Source Title">On {{ comment.timestamp }}</cite></footer>
+  		<p class="mb-0">{{ comment.content }}</p>
+ 		<footer class="blockquote-footer">Via {{ comment.email }} <cite title="Source Title">On {{ comment.timestamp }}</cite></footer>{% if comment.children.count > 0 %}|{{ comment.children.count }}Comment{% if comment.children.count > 1 %}s{% endif %}{% endif %} <a href="#" class='btn btn-link reply-btn'>| Reply</a>
+ 		<div class='comment-reply' style='display: none;'>
+ 		{% for c in comment.children %}
+ 			<blockquote class="blockquote text-left">
+  			<p class="mb-0">{{ c.content }}</p>
+ 			<footer class="blockquote-footer">Replied By {{ c.email }} <cite title="Source Title">On 	{{ c.timestamp }}</cite></footer>
+ 			</blockquote>
+ 		{% endfor %}
+ 		<form method='POST' action='.'>{% csrf_token %}
+				{{ commentForm|crispy }}
+				<input type="hidden" value="{{ comment.id }}" name="parent-id">
+				<button class='btn btn-default'>Reply</button>
+		</form>
+	</div>
 </blockquote>
 		{% endfor %}
 

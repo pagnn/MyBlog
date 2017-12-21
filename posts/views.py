@@ -4,6 +4,8 @@ from django.views.generic import ListView,DetailView,CreateView,UpdateView,Delet
 from django.http import HttpResponse,HttpResponseRedirect
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic.edit import FormMixin
+from django.contrib.contenttypes.models import ContentType
+from django.shortcuts import get_object_or_404 
 # Create your views here.
 from .models import Post
 from .forms import PostCreateForm
@@ -17,7 +19,6 @@ class PostListView(ListView):
 		return context
 	def get(self,request,*args,**kwargs):
 		return super(PostListView,self).get(request,*args,**kwargs)
-
 class PostDetailView(DetailView):
 	template_name='posts/post_detail.html'
 	def get_success_url(self):
@@ -31,8 +32,9 @@ class PostDetailView(DetailView):
 		return HttpResponse('Post not found.')
 	def get_context_data(self,*args,**kwargs):
 		context=super(PostDetailView,self).get_context_data(*args,**kwargs)
-		instance=context['object']		
-		comments=Comment.objects.filter_by_instance(instance)
+		instance=context['object']
+		comments=instance.comment_set.all().filter(parent=None)
+
 		context['comments']=comments		
 
 		commentForm=CommentForm()
@@ -40,15 +42,30 @@ class PostDetailView(DetailView):
 		return context
 	def post(self,request,*args,**kwargs):
 		obj=self.get_object()
+		parent_obj=None
+		try:
+			parent_id=request.POST.get('parent-id')
+		except:
+			parent_id=None
+		if parent_id:
+			parent_qs=Comment.objects.filter(id=parent_id)
+			if parent_qs.exists():
+				parent_obj=parent_qs.first()
 		if request.method == 'POST':
-			form=CommentForm(request.POST or None,initial={
-				'content_type':obj.get_content_type,
-				'object_id':obj.id
-			})
+			form=CommentForm(request.POST)
 			if form.is_valid():
-				instance=form.save(commit=False)
+				cd=form.cleaned_data
+				content=cd.get('content')
+				email=cd.get('email')
+				new_c,created=Comment.objects.get_or_create(
+						post=obj,
+						content=content,
+						email=email,
+						parent=parent_obj,
+					)
 				return HttpResponseRedirect(obj.get_absolute_url())
 			else:
+
 				form=CommentForm()
 		return HttpResponseRedirect(reverse('posts:detail', kwargs={'slug': obj.slug}))
 

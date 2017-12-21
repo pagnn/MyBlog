@@ -6,7 +6,6 @@ from blog.utils import unique_slug_generator
 from django.conf import settings
 from django.contrib.contenttypes.models import ContentType
 
-from comments.models import Comment
 # Create your models here.
 def upload_location(instance,filename):
 	return "%s/%s" % (instance.id,filename)
@@ -41,12 +40,9 @@ class Post(models.Model):
 	@property
 	def comments(self):
 		instance=self
-		qs=Comment.objects.filter_by_instance(instance)
+		qs=self.comment_set.all()
 		return qs
-	@property
-	def get_content_type(self):
-		instance=self
-		return ContentType.objects.get_for_model(instance)
+		
 
 def pre_save_post_receiver(sender,instance,*args,**kwargs):
 	if not instance.slug:
