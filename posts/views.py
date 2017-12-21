@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views.generic import ListView,DetailView,CreateView,UpdateView,DeleteView
-from django.http import HttpResponse
+from django.http import HttpResponse,HttpResponseRedirect
 from django.contrib.auth.mixins import LoginRequiredMixin
 # Create your views here.
 from .models import Post
@@ -11,10 +11,8 @@ class PostListView(ListView):
 	queryset=Post.objects.all()
 	def get_context_data(self,*args,**kwargs):
 		context=super(PostListView,self).get_context_data(*args,**kwargs)
-		print(context)
 		return context
 	def get(self,request,*args,**kwargs):
-		print(request.GET.get('paginator'))
 		return super(PostListView,self).get(request,*args,**kwargs)
 
 class PostDetailView(DetailView):
@@ -29,9 +27,21 @@ class PostDetailView(DetailView):
 class PostCreateView(LoginRequiredMixin,CreateView):
 	form_class=PostCreateForm
 	template_name='posts/create.html'
+	def post(self,request,*args,**kwargs):
+		if request.method == 'POST':
+			print(request.FILES)
+			form = PostCreateForm(request.POST or None, request.FILES or None)
+			if form.is_valid():
+				instance=form.save(commit=False)
+				instance.user=request.user
+				instance.save()
+				return HttpResponseRedirect(instance.get_absolute_url())
+		else:
+			form = PostCreateForm()
+		return render(request, 'posts/create.html', {'form': form})
 class PostUpdateView(LoginRequiredMixin,UpdateView):
 	model=Post
-	fields=['title','content']
+	form_class=PostCreateForm
 	template_name='posts/update.html'
 
 class PostDeleteView(LoginRequiredMixin,DeleteView):

@@ -4,7 +4,7 @@
 {% block content %}
 {% for object in object_list %}
 
-<div class='row'>
+<div class='row' style='height:350px;'>
 
 <div class='col-md-8 col-md-offset-2 mx-auto my-3' style='border-top:1px solid #fff;'>
 	<hr/>
@@ -17,7 +17,7 @@
 	<div class='col-md-6'>
 	<p class='lead' style='color:#9ea0a6;'>{{ object.updated }}</p>
 	<h3 class='t' ><a href="{{ object.get_absolute_url }}" style='text-decoration:none;'>{{ object.title }}</a></h3>
-	<h4 style='color:#9ea0a6;'>{{ object.content|linebreaks|truncatechars:120 }}</h4>
+	<h4 style='color:#9ea0a6;'>{{ object.description }}</h4>
 	</div>
 
 </div>

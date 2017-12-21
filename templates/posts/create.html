@@ -1,4 +1,28 @@
-<form method='POST'>{% csrf_token %}
-{{ form.as_p }}
-<button>POST</button>
-</form>
+{% extends 'base.html' %}
+
+{% block head_extra %}
+{{ form.media }}
+{% endblock head_extra %}
+
+{% load crispy_forms_tags %}
+{% block content %}
+<div id='preview-block' class='row' style='display: none;'>
+	<div class='col-12 col-md-8 col-md-offset-2 mx-auto '>
+	<p class='lead'>Preview <button id='form-btn' class='btn btn-primary'>Continue Edit</button></p>
+<div class='content-preview'>
+	<h2 id='preview-title'></h2>
+	<p id='preview-content'></p>
+</div>
+	</div>
+</div>
+<div id='form-block' class='row'>
+	<div class='col-12 col-md-8 col-md-offset-2 mx-auto '>
+	<form method='POST' enctype="multipart/form-data">{% csrf_token %}
+{{ form|crispy }}
+<button class='btn btn-primary'>POST</button>
+<button id='preview-btn' class='btn btn-primary'>Preview</button>
+</form>	
+	</div>
+</div>
+
+{% endblock content %}
