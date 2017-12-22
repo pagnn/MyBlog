@@ -31,7 +31,7 @@
 		{% for comment in object.comments %}
 		<blockquote class="blockquote text-left">
   		<p class="mb-0">{{ comment.content }}</p>
- 		<footer class="blockquote-footer">Via {{ comment.email }} <cite title="Source Title">On {{ comment.timestamp }}</cite></footer>{% if comment.children.count > 0 %}|{{ comment.children.count }}Comment{% if comment.children.count > 1 %}s{% endif %}{% endif %} <a href="#" class='btn btn-link reply-btn'>| Reply</a>
+ 		<footer class="blockquote-footer">Via {{ comment.email }} <cite title="Source Title">On {{ comment.timestamp }}</cite></footer>{% if comment.children.count > 0 %}|{{ comment.children.count }}Comment{% if comment.children.count > 1 %}s{% endif %}{% endif %} <a href="#" class='btn btn-link reply-btn'>| Reply</a><a href="{{ comment.get_absolute_url }}" class='btn btn-link'>| Thread</a>
  		<div class='comment-reply' style='display: none;'>
  		{% for c in comment.children %}
  			<blockquote class="blockquote text-left">

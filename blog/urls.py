@@ -25,6 +25,7 @@ urlpatterns = [
     path('contact/',contactView,name='contact'),
     path('about/',aboutView,name='about'),
     path('posts/', include('posts.urls',namespace='posts')),
+    path('comments/', include('comments.urls',namespace='comments')),
 
 ]
 if settings.DEBUG:

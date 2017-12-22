@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.contenttypes.fields import GenericForeignKey
 from django.contrib.contenttypes.models import ContentType
+from django.urls import reverse_lazy,reverse
 # Create your models here.
 from posts.models import Post
 
@@ -29,3 +30,5 @@ class Comment(models.Model):
 		if self.parent is None:
 			return False
 		return True
+	def get_absolute_url(self):
+		return reverse('comments:thread',kwargs={'pk':self.pk})
