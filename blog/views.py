@@ -5,5 +5,3 @@ def homeView(request):
 
 def contactView(request):
 	return render(request,'contact.html',{})
-def aboutView(request):
-	return render(request,'about.html',{})

@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     #self
     'posts',
     'comments',
+    'accounts',
 
 ]
 CRISPY_TEMPLATE_PACK='bootstrap4'
