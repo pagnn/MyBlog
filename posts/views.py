@@ -11,6 +11,7 @@ from .models import Post
 from .forms import PostCreateForm
 from comments.models import Comment	
 from comments.forms import CommentForm
+
 class PostListView(ListView):
 	paginate_by=4
 	queryset=Post.objects.all()
@@ -39,6 +40,7 @@ class PostDetailView(DetailView):
 
 		commentForm=CommentForm()
 		context['commentForm']=commentForm
+		
 		return context
 	def post(self,request,*args,**kwargs):
 		obj=self.get_object()

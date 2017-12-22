@@ -5,6 +5,9 @@ from django.http import HttpResponseRedirect
 from .models import Comment
 from .forms import CommentForm
 # Create your views here.
+
+
+
 def comment_thread(request,pk):
 	obj=get_object_or_404(Comment,pk=pk)
 	form=CommentForm(request.POST or None)

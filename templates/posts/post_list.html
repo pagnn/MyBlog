@@ -18,6 +18,7 @@
 	<p class='lead' style='color:#9ea0a6;'>{{ object.updated }}</p>
 	<h3 class='t' ><a href="{{ object.get_absolute_url }}" style='text-decoration:none;'>{{ object.title }}</a></h3>
 	<h4 style='color:#9ea0a6;'>{{ object.description }}</h4>
+	<p class='lead' style='color:#9ea0a6;'>Read Time {{ object.read_time|time:"i" }} Minutes</p>
 	</div>
 
 </div>
