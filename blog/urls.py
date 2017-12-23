@@ -23,7 +23,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('',homeView,name='home'),
     path('contact/',contactView,name='contact'),
-    path('posts/', include('posts.urls',namespace='posts')),
+    path('posts/', include('posts.api.urls',namespace='posts')),
     path('comments/', include('comments.urls',namespace='comments')),
     path('accounts/', include('accounts.urls',namespace='accounts')),
 
