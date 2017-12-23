@@ -11,7 +11,7 @@ from markdown_deux import markdown
 from blog.utils import unique_slug_generator,get_read_time
 # Create your models here.
 def upload_location(instance,filename):
-	return "%s/%s" % (instance.id,filename)
+	return "%d/%s" % (instance.id,filename)
 
 
 
