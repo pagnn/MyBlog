@@ -1,7 +1,6 @@
 from rest_framework.generics import ListAPIView,RetrieveAPIView,UpdateAPIView,DestroyAPIView,CreateAPIView
 from rest_framework.permissions import AllowAny,IsAuthenticated,IsAdminUser,IsAuthenticatedOrReadOnly
 from rest_framework.mixins import DestroyModelMixin,UpdateModelMixin
-from rest_framework.permissions import AllowAny,IsAuthenticated,IsAdminUser,IsAuthenticatedOrReadOnly
 
 from .serializers import CommentListSerializer,CommentDetailSerializer,create_comment_serializer
 from comments.models import Comment

@@ -25,7 +25,7 @@ urlpatterns = [
     path('contact/',contactView,name='contact'),
     path('posts/', include('posts.api.urls',namespace='posts')),
     path('comments/', include('comments.api.urls',namespace='comments')),
-    path('accounts/', include('accounts.urls',namespace='accounts')),
+    path('accounts/', include('accounts.api.urls',namespace='accounts')),
 
 ]
 if settings.DEBUG:
