@@ -24,7 +24,7 @@ urlpatterns = [
     path('',homeView,name='home'),
     path('contact/',contactView,name='contact'),
     path('posts/', include('posts.api.urls',namespace='posts')),
-    path('comments/', include('comments.urls',namespace='comments')),
+    path('comments/', include('comments.api.urls',namespace='comments')),
     path('accounts/', include('accounts.urls',namespace='accounts')),
 
 ]

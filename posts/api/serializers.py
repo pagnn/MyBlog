@@ -1,7 +1,8 @@
 from rest_framework.serializers import ModelSerializer,HyperlinkedIdentityField,SerializerMethodField
 
 from posts.models import Post 
-
+from comments.models import Comment
+from comments.api.serializers import CommentListSerializer
 
 class PostCreateSerializer(ModelSerializer):
 	class Meta:
@@ -31,14 +32,23 @@ class PostListSerializer(ModelSerializer):
 
 class PostDetailSerializer(ModelSerializer):
 	image=SerializerMethodField()
+	comments=SerializerMethodField()
 	class Meta:
 		model=Post
 		fields=[
 			'title',
 			'description',
 			'content',
-			'image'
+			'image',
+			'comments'
 		]
+	def get_comments(self,obj):
+		comments=Comment.objects.filter(post=obj)
+		if comments.exists():
+			comments=CommentListSerializer(comments,many=True).data
+		else:
+			comments=None
+		return comments
 
 	def get_image(self,obj):
 		try:

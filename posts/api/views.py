@@ -34,4 +34,3 @@ class PostCreateAPIView(CreateAPIView):
 	permission_classes=[IsOwnerOrReadOnly,IsAdminUser]
 	def perform_create(self,serializer):
 		serializer.save(user=self.request.user)
-		return 
