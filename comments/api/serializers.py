@@ -52,7 +52,7 @@ def create_comment_serializer(model_type='post',slug=None,parent_id=None):
 class CommentListSerializer(ModelSerializer):
 	replycount=SerializerMethodField()
 	url=HyperlinkedIdentityField(
-			view_name='comments:detail',
+			view_name='comments-api:detail',
 			lookup_field='pk'
 		)
 	class Meta:
@@ -99,4 +99,4 @@ class CommentDetailSerializer(ModelSerializer):
 			return CommentChildDetailSerializer(obj.children(),many=True).data
 		return None
 	def get_post_url(self,obj):
-		return obj.post.get_absolute_url()
+		return obj.post.get_api_absolute_url()

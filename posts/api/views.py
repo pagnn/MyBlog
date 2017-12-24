@@ -5,18 +5,20 @@ from posts.models import Post
 from .serializers import PostListSerializer,PostDetailSerializer,PostCreateSerializer
 from .permissions import IsOwnerOrReadOnly
 from .paginations import PostLimitOffsetPagination,PostPageNumberPagination
+
 class PostListAPIView(ListAPIView):
 	pagination_class=PostPageNumberPagination
 	serializer_class=PostListSerializer
+	permission_classes=[AllowAny]
 	def get_queryset(self,*args,**kwargs):
-		queryset=Post.objects.filter(user=self.request.user)
+		queryset=Post.objects.filter()
 		return queryset
 
 class PostDetailAPIView(RetrieveAPIView):
 	queryset=Post.objects.all()
 	serializer_class=PostDetailSerializer	
 	lookup_field='slug'
-
+	permission_classes=[AllowAny]
 
 class PostUpdateAPIView(UpdateAPIView):
 	queryset=Post.objects.all()

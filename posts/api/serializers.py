@@ -3,7 +3,7 @@ from rest_framework.serializers import ModelSerializer,HyperlinkedIdentityField,
 from posts.models import Post 
 from comments.models import Comment
 from comments.api.serializers import CommentListSerializer
-
+from accounts.api.serializers import UserDetailSerializer
 class PostCreateSerializer(ModelSerializer):
 	class Meta:
 		model=Post
@@ -14,10 +14,10 @@ class PostCreateSerializer(ModelSerializer):
 		]	
 class PostListSerializer(ModelSerializer):
 	url=HyperlinkedIdentityField(
-			view_name='posts:detail',
+			view_name='posts-api:detail',
 			lookup_field='slug'
 		)
-	user=SerializerMethodField()
+	user=UserDetailSerializer(read_only=True)
 	class Meta:
 		model=Post
 		fields=[
@@ -27,8 +27,6 @@ class PostListSerializer(ModelSerializer):
 			'description',
 			'content'
 		]
-	def get_user(self,obj):
-		return str(obj.user.username)
 
 class PostDetailSerializer(ModelSerializer):
 	image=SerializerMethodField()

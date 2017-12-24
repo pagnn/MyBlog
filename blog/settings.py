@@ -135,3 +135,31 @@ STATIC_ROOT=os.path.join(os.path.dirname(BASE_DIR), 'static_root')
 
 MEDIA_URL='/media/'
 MEDIA_ROOT=os.path.join(os.path.dirname(BASE_DIR), 'media_root')
+
+REST_FRAMEWORK = {
+    'DEFAULT_RENDERER_CLASSES': (
+        'rest_framework.renderers.JSONRenderer',
+        'rest_framework.renderers.BrowsableAPIRenderer'
+    ),
+    # 'DEFAULT_PARSER_CLASSES': (
+    #     'rest_framework.parsers.JSONParser',
+    # )
+    "DEFAULT_AUTHENTICATION_CLASSES": (
+            'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
+            'rest_framework.authentication.SessionAuthentication',
+    ),
+    'DEFAULT_PERMISSION_CLASSES': (
+            'rest_framework.permissions.AllowAny',
+    )
+}
+
+'''
+$ curl -X POST -d "username=sylvia&password=sylvia2017" http://127.0.0.1:8000/api/auth/token
+
+{"token":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxLCJ1c2VybmFtZSI6I
+nN5bHZpYSIsImV4cCI6MTUxNDEyMjYxNiwiZW1haWwiOiIifQ.mzbkhvrAy0isFM_FYAgd9pL4yzD0qF
+xdqsiGjBBb8dw"}
+
+curl -X POST -H "Authorization: JWT eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxLCJ1c2VybmFtZSI6InN5bHZpYSIsImV4cCI6MTUxNDEyMjYxNiwiZW1haWwiOiIifQ.mzbkhvrAy0isFM_FYAgd9pL4yzD0qFxdqsiGjBBb8dw" -H "Content-Type: application/json" -d '{"content":"letmetry"}' 'http://127.0.0.1:8000/api/comments/create/?type=post&slug=wabisabi'
+
+'''

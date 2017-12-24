@@ -8,6 +8,7 @@ from .permissions import IsOwnerOrReadOnly
 
 class CommentCreateAPIView(CreateAPIView):
 	queryset=Comment.objects.all()
+	permission_classes=[IsOwnerOrReadOnly,IsAdminUser]
 	def get_serializer_class(self):
 		model_type=self.request.GET.get('type')
 		slug=self.request.GET.get('slug')
