@@ -157,9 +157,10 @@ REST_FRAMEWORK = {
 $ curl -X POST -d "username=sylvia&password=sylvia2017" http://127.0.0.1:8000/api/auth/token
 
 {"token":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxLCJ1c2VybmFtZSI6I
-nN5bHZpYSIsImV4cCI6MTUxNDEyMjYxNiwiZW1haWwiOiIifQ.mzbkhvrAy0isFM_FYAgd9pL4yzD0qF
-xdqsiGjBBb8dw"}
+nN5bHZpYSIsImV4cCI6MTUxNDE5ODM0NSwiZW1haWwiOiIifQ.9XJyE24b5QQKN_4-O1RUWoqKFA1wn8
+iZab_t02JuZZ8"}
 
-curl -X POST -H "Authorization: JWT eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxLCJ1c2VybmFtZSI6InN5bHZpYSIsImV4cCI6MTUxNDEyMjYxNiwiZW1haWwiOiIifQ.mzbkhvrAy0isFM_FYAgd9pL4yzD0qFxdqsiGjBBb8dw" -H "Content-Type: application/json" -d '{"content":"letmetry"}' 'http://127.0.0.1:8000/api/comments/create/?type=post&slug=wabisabi'
+curl -X POST -H "Authorization: JWT eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxLCJ1c2VybmFtZSI6InN5bHZpYSIsImV4cCI6MTUxNDE5ODM0NSwiZW1haWwiOiIifQ.9XJyE24b5QQKN_4-O1RUWoqKFA1wn8iZab_t02JuZZ8" -H "Content-Type: application/json" -d 'email=findjiao@gmail.com&content=letmetry' "http://127.0.0.1:8000/api/comments/create/?slug=wabisabi&type=post"
 
+$ curl -X POST -H "Content-Type: application/json" -d "content=letmetry" http://127.0.0.1:8000/api/comments/create/?type=post&slug=wabisabi
 '''
